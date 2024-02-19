@@ -121,4 +121,36 @@ describe("#wordSearch()", function() {
 
     assert.isFalse(result);
   });
+
+  it("should return true if the row has the word in reverse order horizontally", function() {
+    const result = wordSearch([
+      ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
+      ['D', 'L', 'E', 'F', 'N', 'I', 'E', 'S'],
+      ['Y', 'F', 'C', 'F', 'Q', 'U', 'A', 'L'],
+      ['H', 'M', 'J', 'T', 'E', 'V', 'R', 'G'],
+      ['W', 'H', 'C', 'S', 'Y', 'E', 'R', 'L'],
+      ['B', 'F', 'R', 'E', 'N', 'E', 'Y', 'B'],
+      ['U', 'B', 'T', 'W', 'A', 'P', 'A', 'I'],
+      ['O', 'D', 'C', 'A', 'K', 'U', 'A', 'S'],
+      ['E', 'Z', 'K', 'F', 'Q', 'U', 'A', 'L'],
+    ], 'SEINFELD');
+
+    assert.isTrue(result);
+  });
+
+  it("should return true if the row has the word in reverse order vertically", function() {
+    const result = wordSearch([
+      ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
+      ['D', 'L', 'E', 'F', 'N', 'I', 'D', 'S'],
+      ['Y', 'F', 'C', 'F', 'Q', 'U', 'L', 'L'],
+      ['H', 'M', 'J', 'T', 'E', 'V', 'E', 'G'],
+      ['W', 'H', 'C', 'S', 'Y', 'E', 'F', 'L'],
+      ['B', 'F', 'R', 'E', 'N', 'E', 'N', 'B'],
+      ['U', 'B', 'T', 'W', 'A', 'P', 'I', 'I'],
+      ['O', 'D', 'C', 'A', 'K', 'U', 'E', 'S'],
+      ['E', 'Z', 'K', 'F', 'Q', 'U', 'S', 'L'],
+    ], 'SEINFELD');
+
+    assert.isTrue(result);
+  });
 });

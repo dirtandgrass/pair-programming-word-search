@@ -11,6 +11,10 @@ const wordSearch = (letters, word) => {
   const numCols = letters[0].length;
   if (numCols === 0) return false;
 
+
+
+
+
   //checking to see if each row is an array and has the same amount of chars
   for (const row of letters) {
     if (!Array.isArray(row) || row.length !== numCols) return false;
@@ -19,10 +23,23 @@ const wordSearch = (letters, word) => {
     }
   }
 
+
+
+  // look for the word backwards
+  const reversedWord = word.split('').reverse().join('');
+
+  //   let testString = '';
+  //   for (let i = 0; i < letters.length; i++) {
+  //     if (letters[i].length > i) break;
+  //     testString += letters[i][i];
+  //   }
+  //   if (testString.includes(word) || testString.includes(reversedWord)) return true;
+
   const horizontalJoin = letters.map(ls => ls.join(''));
 
   for (const l of horizontalJoin) {
     if (l.includes(word)) return true;
+    if (l.includes(reversedWord)) return true;
   }
 
   const transposedLetters = transpose(letters);
@@ -30,6 +47,7 @@ const wordSearch = (letters, word) => {
 
   for (const l of verticalJoin) {
     if (l.includes(word)) return true;
+    if (l.includes(reversedWord)) return true;
   }
 
   return false;
