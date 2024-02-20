@@ -1,5 +1,13 @@
+
 const transpose = require('./transpose');
 
+
+/**
+ * Searches for a word in a matrix of letters
+ * @param {string[][]} letters - a matrix of single characters
+ * @param {string} word - a string to search for
+ * @returns {boolean} - true if the word is found, false otherwise
+ */
 const wordSearch = (letters, word) => {
 
   // check valid, non-empty matrix
@@ -11,10 +19,6 @@ const wordSearch = (letters, word) => {
   const numCols = letters[0].length;
   if (numCols === 0) return false;
 
-
-
-
-
   //checking to see if each row is an array and has the same amount of chars
   for (const row of letters) {
     if (!Array.isArray(row) || row.length !== numCols) return false;
@@ -22,48 +26,74 @@ const wordSearch = (letters, word) => {
       if (typeof ele !== "string" || ele.length > 1) return false;
     }
   }
-
-
-
   // look for the word backwards
   const reversedWord = word.split('').reverse().join('');
 
-  //   let testString = '';
-  //   for (let i = 0; i < letters.length; i++) {
-  //     if (letters[i].length > i) break;
-  //     testString += letters[i][i];
-  //   }
-  //   if (testString.includes(word) || testString.includes(reversedWord)) return true;
-
+  // map sub arrays to strins
   const horizontalJoin = letters.map(ls => ls.join(''));
 
+  // check for the word in the horizontalJoin
   for (const l of horizontalJoin) {
-    if (l.includes(word)) return true;
-    if (l.includes(reversedWord)) return true;
+    if (l.includes(word) || l.includes(reversedWord)) return true;
   }
 
+  // switch the rows and columns
   const transposedLetters = transpose(letters);
-  const verticalJoin = transposedLetters.map(ls => ls.join(''));
 
+  // map sub arrays to strings
+  const verticalJoin = transposedLetters.map(ls => ls.join(''));
+  // check for the word in the verticalJoin
   for (const l of verticalJoin) {
-    if (l.includes(word)) return true;
-    if (l.includes(reversedWord)) return true;
+    if (l.includes(word) || l.includes(reversedWord)) return true;
   }
 
+
+
+  // check for the word in the diagonals (from top left to bottom right)
+  if (findInDiagonals(letters, word, reversedWord)) return true;
+
+  // check for the word in the diagonals (from top right to bottom left)
+  const reversedRows = letters.map(ls => ls.reverse());
+  if (findInDiagonals(reversedRows, word, reversedWord)) return true;
+
+  // word not found
   return false;
 };
 
+
+/**
+ * Searches for a word in the diagonals of a matrix of letters - no error chexking, internal f(x)
+ * @param {any} letters
+ * @param {any} word
+ * @param {any} reversedWord
+ * @returns {any}
+ */
+const findInDiagonals = (letters, word, reversedWord) => {
+// starting from the first row, going down
+  for (let i = 0; i < letters.length; i++) {
+  // get diagonal starting with i
+    let diagonal = '';
+    for (let j = 0; j < letters[i].length; j++) {
+      if (letters[i + j] && letters[i + j][j]) {
+        diagonal += letters[i + j][j];
+      }
+    }
+    if (diagonal.includes(word) || diagonal.includes(reversedWord)) return true;
+  }
+
+
+  // starting from the first column and going accross
+  for (let i = 1; i < letters[0].length; i++) {
+  // get diagonal starting with i
+    let diagonal = '';
+    for (let j = 0; j < letters.length; j++) {
+      if (letters[j] && letters[j][i + j]) {
+        diagonal += letters[j][i + j];
+      }
+    }
+    if (diagonal.includes(word) || diagonal.includes(reversedWord)) return true;
+  }
+};
+
+
 module.exports = wordSearch;
-
-
-// wordSearch([
-//   ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
-//   ['S', 'E', 'I', 'N', 'F', 'E', 'L', 'D'],
-//   ['Y', 'F', 'C', 'F', 'Q', 'U', 'A', 'L'],
-//   ['H', 'M', 'J', 'T', 'E', 'V', 'R', 'G'],
-//   ['W', 'H', 'C', 'S', 'Y', 'E', 'R', 'L'],
-//   ['B', 'F', 'R', 'E', 'N', 'E', 'Y', 'B'],
-//   ['U', 'B', 'T', 'W', 'A', 'P', 'A', 'I'],
-//   ['O', 'D', 'C', 'A', 'K', 'U', 'A', 'S'],
-//   ['E', 'Z', 'K', 'F', 'Q', 'U', 'A', 'L'],
-// ], 'FRANK');

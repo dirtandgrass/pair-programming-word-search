@@ -153,4 +153,38 @@ describe("#wordSearch()", function() {
 
     assert.isTrue(result);
   });
+
+  it("should return true if the word is diagonal down", function() {
+    const result = wordSearch([
+      ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
+      ['D', 'L', 'E', 'F', 'N', 'I', 'D', 'S'],
+      ['Y', 'F', 'C', 'F', 'Q', 'U', 'L', 'L'],
+      ['H', 'M', 'J', 'T', 'E', 'V', 'E', 'G'],
+      ['W', 'H', 'C', 'S', 'Y', 'E', 'F', 'L'],
+      ['B', 'F', 'R', 'E', 'N', 'E', 'N', 'B'],
+      ['U', 'B', 'T', 'W', 'A', 'D', 'I', 'I'],
+      ['O', 'D', 'C', 'A', 'K', 'U', 'O', 'S'],
+      ['E', 'Z', 'K', 'F', 'Q', 'U', 'S', 'G'],
+    ], 'DOG');
+
+    assert.isTrue(result);
+  });
+
+
+  it("should return true if the word is diagonal up", function() {
+    const result = wordSearch([
+      ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
+      ['D', 'L', 'E', 'F', 'N', 'I', 'D', 'S'],
+      ['Y', 'F', 'C', 'F', 'Q', 'U', 'L', 'L'],
+      ['H', 'M', 'J', 'T', 'E', 'V', 'E', 'G'],
+      ['W', 'H', 'C', 'S', 'Y', 'E', 'F', 'G'],
+      ['B', 'F', 'R', 'E', 'N', 'E', 'O', 'B'],
+      ['U', 'B', 'T', 'W', 'A', 'D', 'I', 'I'],
+      ['O', 'D', 'C', 'A', 'K', 'U', 'O', 'S'],
+      ['E', 'Z', 'K', 'F', 'Q', 'U', 'S', 'L'],
+    ], 'DOG');
+
+    assert.isTrue(result);
+  });
+
 });
